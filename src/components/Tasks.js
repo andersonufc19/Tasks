@@ -9,7 +9,7 @@ export default props => {
 
     let check = null
 
-    if(props.doneAt !== null){
+    if( props.doneAt !== null){
         check = (
             <View style={styles.done}>
                 <Icon name='check' size={20} color={commomStyle.colors.secondary}/>
@@ -25,7 +25,7 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.checkContainer}></View>
+            <View style={styles.checkContainer}>{check}</View>
             <View>
                 <Text style={[styles.description , descStyle]}>{props.desc}</Text>
                 <Text style={styles.date}>{moment(props.estimateAt).locale('pt-br').format('ddd, D [de] MMMM')}</Text>

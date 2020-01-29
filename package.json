@@ -20,10 +20,6 @@
     "babel-preset-expo": "~8.0.0",
     "@babel/core": "^7.0.0"
   },
-  "rnpm": {
-    "fonte_image": [
-      "./fonte_image/fonts/"
-    ]
-  },
+
   "private": true
 }

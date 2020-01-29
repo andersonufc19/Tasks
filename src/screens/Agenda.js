@@ -1,5 +1,8 @@
 import React,{Component} from 'react'
-import {StyleSheet, Text, View, ImageBackground} from 'react-native'
+import {
+    StyleSheet,
+    Text,
+    View, ImageBackground} from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import todayImage from '../../fonte_image/imgs/today.jpg' 
@@ -17,6 +20,14 @@ export default class Agenda extends Component{
                     </View>
                 </ImageBackground>
                 <View style={styles.taskContainer}>
+                    <Tasks desc='Tarefa pendente' estimateAt={new Date()} doneAt={null}/>
+                    <Tasks desc='Tarefa concluida' estimateAt={new Date()} doneAt={new Date()}/>
+                    <Tasks desc='Tarefa pendente' estimateAt={new Date()} doneAt={null}/>
+                    <Tasks desc='Tarefa concluida' estimateAt={new Date()} doneAt={new Date()}/>
+                    <Tasks desc='Tarefa pendente' estimateAt={new Date()} doneAt={null}/>
+                    <Tasks desc='Tarefa concluida' estimateAt={new Date()} doneAt={new Date()}/>
+                    <Tasks desc='Tarefa pendente' estimateAt={new Date()} doneAt={null}/>
+                    <Tasks desc='Tarefa concluida' estimateAt={new Date()} doneAt={new Date()}/>
                     <Tasks desc='Tarefa pendente' estimateAt={new Date()} doneAt={null}/>
                     <Tasks desc='Tarefa concluida' estimateAt={new Date()} doneAt={new Date()}/>
                 </View>
