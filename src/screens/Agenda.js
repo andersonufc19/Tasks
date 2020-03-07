@@ -109,7 +109,7 @@ export default class Agenda extends Component{
             }
         })
 
-        this.setState({tasks});
+        this.setState({tasks} , this.filterTasks);
     }
 
     /* --------------------------------------------------------------------------------*/
@@ -120,7 +120,7 @@ export default class Agenda extends Component{
                 <ImageBackground source={todayImage} style={styles.background}>
                     <View style={styles.iconBar}>
                         <TouchableOpacity onPress={this.toggleFilter}>
-                            <Icon name={this.state.showDoneTasks ? 'eye' : 'eye-slash'} size={20}
+                            <Icon name={this.state.showDoneTasks ? 'eye' : 'eye-slash'} size={25}
                             color={commomStyle.colors.secondary}/>
                         </TouchableOpacity>
                     </View>
@@ -172,4 +172,11 @@ const styles = StyleSheet.create({
     taskContainer:{
         flex: 7,
     },
+    iconBar:{
+        marginTop: Platform.OS === 'ios' ? 30 : 10,
+        marginHorizontal: 20,
+        flexDirection: "row",
+        justifyContent: 'flex-end',
+
+    }
 })
