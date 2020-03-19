@@ -6,7 +6,7 @@ import {
     ImageBackground,
     FlatList,
     Platform,
-    TouchableOpacity,
+    TouchableOpacity
 } from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -14,6 +14,8 @@ import todayImage from '../../fonte_image/imgs/today.jpg'
 import commomStyle from '../commonStyle'
 import Tasks from '../components/Tasks'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import ActionButton from 'react-native-action-button'
+import AddTasks from './AddTasks'                                 /* Está dentro da pasta Screens */
 
 export default class Agenda extends Component{
 
@@ -61,7 +63,29 @@ export default class Agenda extends Component{
         /* Novo atributo */
         visibleTasks: [],
         showDoneTasks: true,
+        showAddTask: false,                         /* Atributo responsavel por mostrar o modal */
     }
+
+    /* --------------------------------------------------------------------------------
+                        Função responsável por criar as TASKS
+    -----------------------------------------------------------------------------------*/
+
+    AddTask = task => {     
+        const tasks = [...this.state.tasks]               //Clonando as tasks com o operador spread
+        
+        tasks.push({                                      //Adicionando a task recebida pelo modal no array
+            id: Math.random(),                            //Gerando um id para a task
+            desc: task.desc,                              //Pegando a descrição da tarefa
+            estimateAt: task.data,                        //Pegando a data da tarefa
+            doneAt: null,
+
+        })
+
+        this.setState({ tasks, showAddTask:false }, this.filterTasks)                           //Atualizado o estado com o novo array e escondendo o modal
+    }
+
+
+
 
 
 
@@ -117,6 +141,8 @@ export default class Agenda extends Component{
     render(){
         return(
             <View style={styles.container}>
+                <AddTasks isVisible={this.state.showAddTask}
+                        onSave={this.AddTask} onCancel={() => this.setState({showAddTask: false})}/>
                 <ImageBackground source={todayImage} style={styles.background}>
                     <View style={styles.iconBar}>
                         <TouchableOpacity onPress={this.toggleFilter}>
@@ -134,6 +160,10 @@ export default class Agenda extends Component{
                     keyExtractor={item => `${item.id}`}
                     renderItem={({item})  => <Tasks {...item} toggleTask={this.toggleTask}/>}/>
                 </View>
+
+                {/* Botão de ação para criar as tasks */}
+                <ActionButton buttonColor={commomStyle.colors.today} onPress={() => {this.setState({ showAddTask: true }) }}/>
+
             </View>
         )
     }
