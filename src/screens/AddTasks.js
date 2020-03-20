@@ -8,7 +8,9 @@ import {
     StyleSheet,
     TouchableWithoutFeedback,
     TouchableOpacity,
-    Alert
+    Alert,
+    DatePickerAndroid,
+    Platform
 } from 'react-native'
 import moment from 'moment'
 import commonStyle from '../commonStyle'
@@ -45,7 +47,41 @@ export default class AddTasks extends Component {
     }
 
 
+    /*---------------------------------------------------------------- 
+            FUNÇÃO RESPONSÁVEL POR MANIPULAR AS DATAS NO ANDROID
+    ------------------------------------------------------------------*/
+
+    handlerDateAndroidChanged = () => {
+        DatePickerAndroid.open({
+            date: this.state.data
+        }).then( e => {
+            if(e.action !== DatePickerAndroid.dismissedAction){
+                const momentDate = moment(this.state.data)
+                momentDate.date(e.day)
+                momentDate.month(e.month)
+                momentDate.year(e.year)
+
+                this.setState({data: momentDate.toDate()})
+            }
+        })
+    }
+
     render(){
+
+        let datePicker = null
+        
+        if(Platform.OS === 'ios'){
+            datePicker = <DatePickerIOS mode='date' date={this.state.data} onDateChange={data => this.setState({ data })}/>
+        } else {
+            datePicker = (
+                <TouchableOpacity onPress={this.handlerDateAndroidChanged}>
+                    <Text style={styles.date}>
+                        {moment(this.state.data).format('ddd, D [de] MMMM [de] YYYY')}
+                    </Text>
+                </TouchableOpacity>
+            )
+        }
+
         return(
             <Modal onRequestClose={this.props.onCancel} 
                         visible={this.props.isVisible}  //Vai receber uma propreidade para saber se está visivel ou não
@@ -65,8 +101,8 @@ export default class AddTasks extends Component {
                     style={styles.input} 
                     onChangeText={desc => this.setState({ desc })} 
                     value={this.state.desc}/>    
-
-                {/*  <DatePickerIOS mode='date' date={this.state.data} onDateChange={data => this.setState({ data })}/> */}
+                    {datePicker}
+                
                     <View style={{flexDirection:'row', justifyContent:'flex-end'}}>
 
                         {/* Botão cancelar */}
@@ -125,5 +161,11 @@ var styles = StyleSheet.create({
         borderWidth:1,                          /* Espessura da borda */
         borderRadius:6,                         /* Arredondando as bordas */
         padding:5,
+    },
+    date:{
+        fontSize:20,
+        marginLeft:10,
+        marginTop:10,
+        textAlign: 'center',
     }
 })
