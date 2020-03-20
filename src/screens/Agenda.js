@@ -63,7 +63,7 @@ export default class Agenda extends Component{
         /* Novo atributo */
         visibleTasks: [],
         showDoneTasks: true,
-        showAddTask: false,                         /* Atributo responsavel por mostrar o modal */
+        showAddTask: false,                         /* Atributo responsavel por mostrar o modal logo no inicio*/
     }
 
     /* --------------------------------------------------------------------------------
@@ -71,6 +71,7 @@ export default class Agenda extends Component{
     -----------------------------------------------------------------------------------*/
 
     AddTask = task => {     
+
         const tasks = [...this.state.tasks]               //Clonando as tasks com o operador spread
         
         tasks.push({                                      //Adicionando a task recebida pelo modal no array
@@ -81,13 +82,8 @@ export default class Agenda extends Component{
 
         })
 
-        this.setState({ tasks, showAddTask:false }, this.filterTasks)                           //Atualizado o estado com o novo array e escondendo o modal
+        this.setState({ tasks, showAddTask:false }, this.filterTasks)    //Atualizado o estado com o novo array e escondendo o modal
     }
-
-
-
-
-
 
     /* --------------------------------------------------------------------------------
                         Função responsável por filtrar as TASKS

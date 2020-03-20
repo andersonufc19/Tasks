@@ -30,15 +30,17 @@ export default class AddTasks extends Component {
             FUNÇÃO RESPONSÁVEL POR SALVAR UMA TAREFA
     -----------------------------------------------------------*/
 
+    /* Quando eu chamar essa função dentro desse componente(AddTasks) */
     save = () => {
-        if(!this.state.desc.trim()){                               // se não estiver setado....(o trim remove os espaço como caracter)
+        if(!this.state.desc.trim()){                        // se não estiver setado....(o trim remove os espaço como caracter)
             Alert.alert('Dados inválidos!', 'Informa uma descrição para a tarefa')
             return                                          //Sai da função                         
         }                                
 
-        const data = {...this.state}
-        this.props.onSave(data)                             //onSave() vai salvar as informações quando for efetuado um click
-        this.setState({...initialState})                    //Restaurando o estado inicial
+        const data = {...this.state}                        //Clonando o estado atual
+        this.props.onSave(data)                             //onSave() vai salvar as informações quando for efetuado um click. 
+                                                            //Essa função onSave será recebida via props passando os dados
+        this.setState({...initialState})                    //Restaurando o estado inicial --> limpando
 
     }
 
@@ -64,11 +66,15 @@ export default class AddTasks extends Component {
                     onChangeText={desc => this.setState({ desc })} 
                     value={this.state.desc}/>    
 
-                   {/*  <DatePickerIOS mode='date' date={this.state.data} onDateChange={data => this.setState({ data })}/> */}
+                {/*  <DatePickerIOS mode='date' date={this.state.data} onDateChange={data => this.setState({ data })}/> */}
                     <View style={{flexDirection:'row', justifyContent:'flex-end'}}>
+
+                        {/* Botão cancelar */}
                         <TouchableOpacity onPress={this.props.onCancel}>
                             <Text style={styles.button}>Cancelar</Text>
                         </TouchableOpacity>
+
+                        {/* Botão salvar */}
                         <TouchableOpacity onPress={this.save}>
                             <Text style={styles.button}>Salvar</Text>
                         </TouchableOpacity>
