@@ -86,6 +86,16 @@ export default class Agenda extends Component{
     }
 
     /* --------------------------------------------------------------------------------
+                        Função responsável por deletar as TASKS
+    -----------------------------------------------------------------------------------*/
+
+    deleteTasks = id => {
+        const tasks = this.state.tasks.filter(task => task.id !== id)
+        this.setState({ tasks },this.filterTasks)
+    }
+
+
+    /* --------------------------------------------------------------------------------
                         Função responsável por filtrar as TASKS
     -----------------------------------------------------------------------------------*/
 
@@ -154,7 +164,7 @@ export default class Agenda extends Component{
                 <View style={styles.taskContainer}>
                     <FlatList data={this.state.visibleTasks}
                     keyExtractor={item => `${item.id}`}
-                    renderItem={({item})  => <Tasks {...item} toggleTask={this.toggleTask}/>}/>
+                    renderItem={({item})  => <Tasks {...item} toggleTask={this.toggleTask} onDelete={this.deleteTasks}/>}/>
                 </View>
 
                 {/* Botão de ação para criar as tasks */}
