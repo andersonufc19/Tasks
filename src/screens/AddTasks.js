@@ -146,7 +146,7 @@ var styles = StyleSheet.create({
         color:commonStyle.colors.default,
     },
     header:{
-        backgroundColor:commonStyle.colors.default,
+        backgroundColor:commonStyle.colors.today,
         color:commonStyle.colors.secondary,
         textAlign:'center',
         padding:15,
