@@ -6,7 +6,8 @@ import {
     ImageBackground,
     FlatList,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -20,45 +21,7 @@ import AddTasks from './AddTasks'                                 /* Está dentr
 export default class Agenda extends Component{
 
     state = {
-        tasks:[
-            {id: Math.random(), desc: 'Tarefa 5',
-            estimateAt: new Date(), doneAt: new Date()
-            },
-            {id: Math.random(), desc: 'Tarefa 2',
-            estimateAt: new Date(), doneAt: null
-            },
-            {id: Math.random(), desc: 'Tarefa 1',
-            estimateAt: new Date(), doneAt: new Date()
-            },
-            {id: Math.random(), desc: 'Tarefa 2',
-            estimateAt: new Date(), doneAt: null
-            },
-            {id: Math.random(), desc: 'Tarefa 1',
-            estimateAt: new Date(), doneAt: new Date()
-            },
-            {id: Math.random(), desc: 'Tarefa 2',
-            estimateAt: new Date(), doneAt: null
-            },
-            {id: Math.random(), desc: 'Tarefa 1',
-            estimateAt: new Date(), doneAt: new Date()
-            },
-            {id: Math.random(), desc: 'Tarefa 2',
-            estimateAt: new Date(), doneAt: null
-            },
-            {id: Math.random(), desc: 'Tarefa 1',
-            estimateAt: new Date(), doneAt: new Date()
-            },
-            {id: Math.random(), desc: 'Tarefa 2',
-            estimateAt: new Date(), doneAt: null
-            },
-            {id: Math.random(), desc: 'Tarefa 1',
-            estimateAt: new Date(), doneAt: new Date()
-            },
-            {id: Math.random(), desc: 'Tarefa 2',
-            estimateAt: new Date(), doneAt: null
-            },
-
-        ],
+        tasks:[],       //Array onde fica as tasks
 
         /* Novo atributo */
         visibleTasks: [],
@@ -111,6 +74,7 @@ export default class Agenda extends Component{
             }
 
             this.setState({visibleTasks})
+            AsyncStorage.setItem('tasks', JSON.stringify(this.state.tasks))
         }
 
     /* --------------------------------------------------------------------------------
@@ -121,7 +85,12 @@ export default class Agenda extends Component{
             this.setState({showDoneTasks: !this.state.showDoneTasks}, this.filterTasks)
         }
 
-        
+
+    componentDidMount = async() => {
+        const data = await AsyncStorage.getItem('tasks')
+        const tasks = JSON.parse(data) || []
+        this.setState({ tasks },this.filterTasks)
+    }
 
 
     /* --------------------------------------------------------------------------------
