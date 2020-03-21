@@ -83,7 +83,7 @@ export default class Agenda extends Component{
 
         toggleFilter = () =>{
             this.setState({showDoneTasks: !this.state.showDoneTasks}, this.filterTasks)
-        }
+        }//teste
 
 
     componentDidMount = async() => {
